@@ -1,5 +1,5 @@
 #! /bin/sh
-version="20.1-Nexus"
+version="21.3-Omega"
 source_img_name="CoreELEC-Amlogic-ng.arm-${version}-Generic"
 source_img_file="${source_img_name}.img.gz"
 source_img_url="https://github.com/CoreELEC/CoreELEC/releases/download/${version}/${source_img_name}.img.gz"
@@ -14,7 +14,7 @@ libreelec_path="${system_root}/usr/lib/libreelec"
 config_path="${system_root}/usr/config"
 kodi_userdata="${mount_point}/.kodi/userdata"
 
-echo "Welcome to build CoreELEC for Skyworth E900V22C!"
+echo "Welcome to build CoreELEC for Mobicast CM311-1SA!"
 echo "Downloading CoreELEC-${version} generic image"
 wget ${source_img_url} -O ${source_img_file} | exit 1
 echo "Decompressing CoreELEC image"
@@ -26,7 +26,7 @@ echo "Mounting CoreELEC boot partition"
 sudo mount -o loop,offset=4194304 ${source_img_name}.img ${mount_point}
 
 echo "Copying E900V22C DTB file"
-sudo cp ${common_files}/e900v22c.dtb ${mount_point}/dtb.img
+sudo cp ${common_files}/CM311-1SA.dtb ${mount_point}/dtb.img
 
 echo "Decompressing SYSTEM image"
 sudo unsquashfs -d ${system_root} ${mount_point}/SYSTEM
@@ -51,9 +51,9 @@ echo "Copying rc_keymap files"
 sudo cp ${common_files}/rc_maps.cfg ${config_path}/rc_maps.cfg
 sudo chown root:root ${config_path}/rc_maps.cfg
 sudo chmod 0664 ${config_path}/rc_maps.cfg
-sudo cp ${common_files}/e900v22c.rc_keymap ${config_path}/rc_keymaps/e900v22c
-sudo chown root:root ${config_path}/rc_keymaps/e900v22c
-sudo chmod 0664 ${config_path}/rc_keymaps/e900v22c
+sudo cp ${common_files}/yidong.rc_keymap ${config_path}/rc_keymaps/yidong
+sudo chown root:root ${config_path}/rc_keymaps/yidong
+sudo chmod 0664 ${config_path}/rc_keymaps/yidong
 
 echo "Compressing SYSTEM image"
 sudo mksquashfs ${system_root} SYSTEM -comp lzo -Xalgorithm lzo1x_999 -Xcompression-level 9 -b 524288 -no-xattrs
@@ -92,4 +92,3 @@ mv ${source_img_name}.img ${target_img_name}.img
 echo "Compressing CoreELEC image"
 gzip ${target_img_name}.img
 sha256sum ${target_img_name}.img.gz > ${target_img_name}.img.gz.sha256
-

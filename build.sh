@@ -4,7 +4,7 @@ source_img_name="CoreELEC-Amlogic-ng.arm-${version}-Generic"
 source_img_file="${source_img_name}.img.gz"
 source_img_url="https://github.com/CoreELEC/CoreELEC/releases/download/${version}/${source_img_name}.img.gz"
 target_img_prefix="CoreELEC-Amlogic-ng.arm-${version}"
-target_img_name="${target_img_prefix}-E900V22C-$(date +%Y.%m.%d)"
+target_img_name="${target_img_prefix}-CM311-1SA-$(date +%Y.%m.%d)"
 mount_point="target"
 common_files="common-files"
 system_root="SYSTEM-root"
@@ -25,7 +25,7 @@ mkdir ${mount_point}
 echo "Mounting CoreELEC boot partition"
 sudo mount -o loop,offset=4194304 ${source_img_name}.img ${mount_point}
 
-echo "Copying E900V22C DTB file"
+echo "Copying CM311-1SA DTB file"
 sudo cp ${common_files}/CM311-1SA.dtb ${mount_point}/dtb.img
 
 echo "Decompressing SYSTEM image"

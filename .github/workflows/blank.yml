@@ -1,0 +1,34 @@
+name: Simple Build and Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '发布标签'
+        required: true
+        default: 'v0.0.1'
+
+permissions:
+  contents: write  # 需要这个权限来创建release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Build image
+      run: |
+        echo "开始构建..."
+        chmod +x build.sh
+        ./build.sh
+        
+    - name: Upload to release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ github.event.inputs.tag }}
+        name: Release ${{ github.event.inputs.tag }}
+        artifacts: "*.gz,*.265"
+        token: ${{ secrets.GITHUB_TOKEN }}
